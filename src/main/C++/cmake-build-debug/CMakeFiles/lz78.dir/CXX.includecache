@@ -1,0 +1,34 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/jiahong/Documents/repository/proj/lz78/src/main/C++/main.cpp
+iostream
+-
+fstream
+-
+utility
+-
+Trie.h
+/home/jiahong/Documents/repository/proj/lz78/src/main/C++/Trie.h
+
+/home/jiahong/Templates/include/Node.h
+algorithm
+-
+cassert
+-
+
+/home/jiahong/Templates/include/Trie.h
+vector
+-
+string
+-
+iostream
+-
+Node.h
+/home/jiahong/Templates/include/Node.h
+

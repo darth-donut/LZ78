@@ -1,0 +1,22 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'futil.compression.LZ78Hash'
+
+version = '1.0.0SNAPSHOT'
+sourceCompatibility = 1.8
+
+dependencies {
+    compile files("/home/jiahong/Documents/repository/data_structures/build/libs/data_structures-1.0.0SNAPSHOT.jar") 
+}
+
+jar {
+    from {
+        configurations.compile.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+}
