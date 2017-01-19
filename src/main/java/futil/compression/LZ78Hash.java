@@ -4,16 +4,62 @@
  */
 package futil.compression;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.RandomAccessFile;
 import java.util.Arrays;
 import java.util.HashMap;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Options;
+import org.apache.commons.cli.ParseException;
+import org.apache.commons.io.FilenameUtils;
 
 public class LZ78Hash {
 
-    public static void main(String[] args) {
+    private static CommandLine parseArgs(String[] args) {
+        DefaultParser parser = new DefaultParser();
+        Options opts = new Options();
+/*        Option comp = new Option("c", "--compress", false, "set to compression mode");
+        comp.setRequired(false);*/
+        opts.addOption("c", "compress", false, "set to compression mode");
+        opts.addOption("x", "decompress", false, "set to decompression mode");
+        HelpFormatter help = new HelpFormatter();
+        CommandLine cmd = null;
 
-            compress(args);
-            uncompress(new File(args[1]), new File("final.txt"));
+        try {
+            cmd = parser.parse(opts, args);
+            if (cmd.hasOption("c") && cmd.hasOption("x") ||
+                    !cmd.hasOption("c") && !cmd.hasOption("x")) {
+                throw new ParseException("Specify at least one argument for compression / decompression");
+            }
+            if (cmd.getArgs().length != 1)
+                throw new ParseException("Input file missing, only accepts one file at a time");
+        } catch (ParseException e) {
+            System.err.println(e.getMessage());
+            help.printHelp("java -jar LZ78x.x.x.jar -c/-x inputFile", opts);
+            System.err.println(" inputFile\t   Input file to compress/decompress");
+        }
+        return cmd;
+    }
+
+    public static void main(String[] args) {
+        CommandLine cmd = parseArgs(args);
+        // we can be sure cmd.getArgs()[0] has a file
+        if (cmd.hasOption("c")) {
+            File fin = new File(cmd.getArgs()[0]);
+            File fout = new File(cmd.getArgs()[0]+ ".lz");
+            compress(fin, fout);
+        } else if (cmd.hasOption("x")) {
+            uncompress(new File(cmd.getArgs()[0]),
+                    new File(FilenameUtils.removeExtension(cmd.getArgs()[0])+".txt"));
+        }
     }
 
     public static void uncompress(File fin, File fout) {
@@ -68,11 +114,9 @@ public class LZ78Hash {
         // Step 6: complete
     }
 
-    public static void compress(String[] args) {
+    public static void compress(File fin, File fout) {
 
         // Step 1: deal with IO
-        File fin = new File(args[0]);
-        File fout = new File(args[1]);
         File tmp = null;
 
         try {

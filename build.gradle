@@ -6,8 +6,15 @@ mainClassName = 'futil.compression.LZ78Hash'
 version = '1.0.0SNAPSHOT'
 sourceCompatibility = 1.8
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     compile files("/home/jiahong/Documents/repository/data_structures/build/libs/data_structures-1.0.0SNAPSHOT.jar") 
+    compile group: 'commons-cli', name: 'commons-cli', version: '1.3.1'
+    compile group: 'commons-io', name: 'commons-io', version: '2.5'
+
 }
 
 jar {
