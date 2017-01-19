@@ -5,7 +5,7 @@ Emulates the [LZ78](https://en.wikipedia.org/wiki/LZ77_and_LZ78) algorithm (a va
 
 ### Because this is just an emulation, there are much more improvements that can be made, for example :##
   - since we assume ascii, the characters can be encoded in 7 bits (instead of 8, as this Java implementation was)
-  - substituting integers with pointers in dictionary entries
+  - writing to compressed file in bits instead of bytes (rounded up to nearest byte as of this moment, _extremely_ inefficient)
   - file I/O overhead from raw file -> intermediate dictionary (LZ78 output) -> bytefile
  
  
