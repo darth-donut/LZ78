@@ -11,6 +11,8 @@ Emulates the [LZ78](https://en.wikipedia.org/wiki/LZ77_and_LZ78) algorithm (a va
  
 ##### Todos:
   - [ ] Command-line argument (compressing, decompressing)
+  - [ ] Stress tests
   - [ ] Deal with outliers (some files have special characters)
   - [ ] Using a compressed Trie (instead of a HashMap)
   - [ ] Translating to C++
+ 
