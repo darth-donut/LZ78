@@ -22,7 +22,7 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FilenameUtils;
 
 public class LZ78Hash {
-
+    public static int UTF = 0b11111111; // 256
     private static CommandLine parseArgs(String[] args) {
         DefaultParser parser = new DefaultParser();
         Options opts = new Options();
@@ -58,7 +58,7 @@ public class LZ78Hash {
             compress(fin, fout);
         } else if (cmd.hasOption("x")) {
             uncompress(new File(cmd.getArgs()[0]),
-                    new File(FilenameUtils.removeExtension(cmd.getArgs()[0])+".txt"));
+                    new File(FilenameUtils.removeExtension(cmd.getArgs()[0])));
         }
     }
 
@@ -169,6 +169,7 @@ public class LZ78Hash {
         int lastIndex = 0;
         try {
             while ((ch = in.read()) != -1) {
+                if (ch >= UTF) continue;
                 // start building up the characters read
                 stringBuffer.append((char)ch);
 
