@@ -5,6 +5,7 @@
 #ifndef TRIE_TRIE_H
 #define TRIE_TRIE_H
 
+
 #include <memory>
 #include "Node.h"
 
@@ -27,6 +28,7 @@ public:
 
     T *get(const std::string);
 
+    T *remove(const std::string);
 
 private:
     size_type char_set;
@@ -42,7 +44,7 @@ Trie<T>::add(std::string key, T *val) {
         if (!node->has_child((size_t)key[i]))
             node->add_child((i == key.size() - 1) ? val : nullptr, (size_t) key[i]);
         // special case: when this string is a prefix of another existing string already
-        else if (node->has_child((size_t)key[i]) && i == key.size()-1)
+        else if (i == key.size()-1)
             node->get_child((size_t)key[i])->set_data(val);
         node = node->get_child((size_t)key[i]);
     }
@@ -54,6 +56,25 @@ Trie<T>::has(const std::string key) {
     return Trie<T>::get(key) != nullptr;
 }
 
+template<class T>
+T*
+Trie<T>::remove(const std::string key) {
+    ds::Node<T> *node = &root;
+    for (std::string::size_type i = 0; i < key.size(); i++) {
+        if (!node->has_child((size_t)key[i]))
+            return nullptr;
+        node = node->get_child((size_t)key[i]);
+    }
+    T* out = node->get_data();
+
+    // in both cases, we DO NOT free T*, since the caller should decide how its dealt with
+    if (node->is_leaf())
+        node->perish();
+    else
+        node->set_data(nullptr, false);
+    return out;
+
+}
 
 template<class T>
 T*
@@ -66,6 +87,7 @@ Trie<T>::get(const std::string key) {
     }
     return node->get_data();
 }
+
 
 
 }

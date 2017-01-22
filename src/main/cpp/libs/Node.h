@@ -39,10 +39,9 @@ public:
         return nullptr;
     }
     T* get_data() { return data; }
-    void set_data(T *data) {
-        delete this->data;
-        this->data = data;
-    }
+    void set_data(T *data, bool destroy=true);
+    bool is_leaf() { return children == nullptr; }
+    void perish();
 
 private:
     T *data;
@@ -54,6 +53,13 @@ private:
     void destruct();
 };
 
+template<class T>
+void
+Node<T>::set_data(T* data, bool destroy) {
+    if (destroy)
+        delete this->data;
+    this->data = data;
+}
 
 template <class T>
 bool
@@ -71,6 +77,22 @@ Node<T>::operator=(const Node &other) {
 }
 
 
+
+template<class T>
+void
+Node<T>::perish() {
+    // parent disown this node
+    parent->children[self_index] = nullptr;
+
+    // disown all children, destroying them in the process
+    for (size_t i = 0; children && i < max_child_count; i++)
+        delete children[i];
+    delete[] children;
+
+    // DO NOT DELETE data, the caller deals with it
+    // this behaviour supports Trie.remove():T*
+    data = nullptr;
+}
 
 /**
  * Creates a dangling node
@@ -90,11 +112,9 @@ Node<T>::Node(const Node &other) {
 template<class T>
 void
 Node<T>::destruct() {
-    if (children != nullptr) {
-        for (size_t i = 0; i < max_child_count; i++)
-            delete children[i];
-        delete[] children;
-    }
+    for (size_t i = 0; children &&  i < max_child_count; i++)
+        delete children[i];
+    delete[] children;
     delete data;
 }
 
