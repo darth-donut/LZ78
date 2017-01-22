@@ -1,1 +1,1 @@
-/usr/bin/c++    -Wall -Werror -Wpedantic -Wextra -g   CMakeFiles/lz78.dir/lz78.cc.o  -o lz78 
+/usr/bin/c++    -Wall -Werror -Wpedantic -Wextra -g -g   CMakeFiles/lz78.dir/lz78.cc.o CMakeFiles/lz78.dir/Bit_encode.cc.o CMakeFiles/lz78.dir/LZPair.cc.o  -o lz78 

@@ -11,5 +11,5 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX_FLAGS}")
 include_directories("libs")
 
 # exe
-set(SOURCE_FILES lz78.cc)
+set(SOURCE_FILES lz78.cc Bit_encode.cc Bit_encode.h LZPair.cc LZPair.h)
 add_executable(lz78 ${SOURCE_FILES})

@@ -1,5 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/lz78.dir/lz78.cc.o"
+  "CMakeFiles/lz78.dir/Bit_encode.cc.o"
+  "CMakeFiles/lz78.dir/LZPair.cc.o"
   "lz78.pdb"
   "lz78"
 )

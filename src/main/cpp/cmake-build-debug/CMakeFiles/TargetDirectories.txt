@@ -1,3 +1,3 @@
-/home/jiahong/Documents/repository/proj/lz78/src/main/C++/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/jiahong/Documents/repository/proj/lz78/src/main/C++/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/jiahong/Documents/repository/proj/lz78/src/main/C++/cmake-build-debug/CMakeFiles/lz78.dir
+/home/jiahong/Documents/repository/proj/lz78/src/main/cpp/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/jiahong/Documents/repository/proj/lz78/src/main/cpp/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/jiahong/Documents/repository/proj/lz78/src/main/cpp/cmake-build-debug/CMakeFiles/lz78.dir
