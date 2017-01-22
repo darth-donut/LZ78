@@ -6,29 +6,23 @@
 
 #IncludeRegexTransform: 
 
-/home/jiahong/Documents/repository/proj/lz78/src/main/C++/main.cpp
+../libs/Node.h
+memory
+-
 iostream
 -
+
+../libs/Trie.h
+memory
+-
+Node.h
+../libs/Node.h
+
+/home/jiahong/Documents/repository/proj/lz78/src/main/C++/lz78.cc
 fstream
 -
-utility
+iostream
 -
 Trie.h
 /home/jiahong/Documents/repository/proj/lz78/src/main/C++/Trie.h
-
-/home/jiahong/Templates/include/Node.h
-algorithm
--
-cassert
--
-
-/home/jiahong/Templates/include/Trie.h
-vector
--
-string
--
-iostream
--
-Node.h
-/home/jiahong/Templates/include/Node.h
 

@@ -21,7 +21,8 @@ package futil.compression;
  * 22
  * b0
  *
- * Needs only 2 bits [0-2] to represent all the possible index, and if we assume UTF-8 characters,
+ * Needs only 2 bits [0-2] to represent all the possible index (but since we're using byte[],
+ * the smallest we can go is 8 bits), and if we assume UTF-8 characters,
  * then we only need 1 byte to represent each a,b,c,2,b.
  */
 public class Byject {

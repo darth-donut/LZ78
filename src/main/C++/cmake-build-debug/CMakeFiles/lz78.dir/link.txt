@@ -1,1 +1,1 @@
-/usr/bin/c++    -Wall -Werror -Wpedantic -Wextra -g -g   CMakeFiles/lz78.dir/main.cpp.o  -o lz78  -L/home/jiahong/Templates -ltrie -Wl,-rpath,/home/jiahong/Templates 
+/usr/bin/c++    -Wall -Werror -Wpedantic -Wextra -g   CMakeFiles/lz78.dir/lz78.cc.o  -o lz78 

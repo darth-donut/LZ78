@@ -7,15 +7,9 @@ set(CXX_FLAGS "-Wall -Werror -Wpedantic -Wextra -g")
 #compiler settings
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX_FLAGS}")
 
-# include trie
-set(DEP_LIBS libtrie.so)
-# default library
-link_directories(~/Templates/)
-
-#include trie.h
-include_directories(~/Templates/include/)
+# include dependencies (Trie.h, Node.h from /usr/local/include/ds/trie/)
+include_directories("libs")
 
 # exe
-set(SOURCE_FILES main.cpp)
+set(SOURCE_FILES lz78.cc)
 add_executable(lz78 ${SOURCE_FILES})
-target_link_libraries(lz78 ${DEP_LIBS})

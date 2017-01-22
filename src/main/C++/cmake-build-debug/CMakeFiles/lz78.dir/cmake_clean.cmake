@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/lz78.dir/main.cpp.o"
+  "CMakeFiles/lz78.dir/lz78.cc.o"
   "lz78.pdb"
   "lz78"
 )
