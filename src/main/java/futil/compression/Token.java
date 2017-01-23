@@ -5,7 +5,7 @@
 package futil.compression;
 
 public class Token {
-
+    private static final int BYTE = 8;
     private char ch;
     private long index;
 

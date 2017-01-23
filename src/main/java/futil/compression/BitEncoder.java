@@ -7,64 +7,68 @@ package futil.compression;
 
 
 import java.io.*;
-import java.util.Scanner;
 
 public class BitEncoder {
-    private File file;
+    private static final int BYTE = 8;
+    private File ofile;
+    private File ifile;
+    private int maxIndex;
+    private int charBitSize;
+    private long indexBitCount;
 
-    public BitEncoder(File file) throws FileNotFoundException {
-        if (!file.exists())
+    public BitEncoder(File ifile, File ofile, int encoding, int maxIndex) throws FileNotFoundException {
+        if (!ifile.exists())
             throw new FileNotFoundException();
-        this.file = file;
+        this.ifile = ifile;
+        this.ofile = ofile;
+        this.maxIndex = maxIndex;
+        this.charBitSize = (int)log2(encoding);
+        this.indexBitCount = log2(maxIndex);
     }
 
 
-    public long printBytes(File ofile) throws IOException, InvalidHeaderException {
-        long largestInt;
+    public long dump() throws IOException, InvalidHeaderException {
+        System.err.println("Charset encoding: " + this.charBitSize+
+                " Largest int " + maxIndex + " require " + indexBitCount +" to encode");
 
         // setup files
-        BufferedReader sc = new BufferedReader(new FileReader(file));
-        String firstLine = sc.readLine();
-        DataOutputStream dataout = new DataOutputStream(new FileOutputStream(ofile));
+        BufferedReader sc = new BufferedReader(new FileReader(ifile));
 
-        int bigIntLength = firstLine.indexOf('x');
-        if (bigIntLength == -1)
-            throw new InvalidHeaderException("Expected at least one 'x' at header for LZ78 output");
-        largestInt = Long.parseLong(firstLine.substring(0, bigIntLength));
 
-        long bits = log2(largestInt);
-        System.out.println("Largest int " + largestInt + " require " + bits +" to encode");
-
-        StringBuilder buffer = new StringBuilder();
+        // build token
         int ch;
-        boolean writemeta = false;
+        StringBuilder buffer = new StringBuilder();
+
+        // BitBuffer setup
+        BitBufferOutput bitBufferOutput = new BitBufferOutput(ofile, charBitSize, indexBitCount);
 
         while ((ch = sc.read()) != -1) {
-            // read character
-            buffer.append((char)ch);
             // read index
             buffer.append(sc.readLine());
+            Token tk = new Token((char)ch, Long.parseLong(buffer.toString()));
 
-            Byject it = new Byject(buffer.toString(), bits);
-
-            if (!writemeta) {
-                dataout.writeInt(it.metadata());
-                writemeta = true;
-            }
-            dataout.write(it.dump());
+            // write to bitBuffer (do NOT flush in a loop)
+            bitBufferOutput.write(tk);
 
             // clear buffer
             buffer.setLength(0);
         }
 
-        dataout.close();
+        bitBufferOutput.close();
         sc.close();
 
-        return largestInt;
+        return indexBitCount;
     }
 
     private long log2(long x) {
-        return (long)Math.ceil(Math.log(x)/Math.log(2));
+        int add = 0;
+        if (isPow2(x))
+            add++;
+        return (long)(Math.ceil(Math.log(x)/Math.log(2))+add);
+    }
+
+    private boolean isPow2(long x) {
+        return ((x & (x-1))  == 0) && x != 0;
     }
 
 

@@ -11,8 +11,6 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.RandomAccessFile;
-import java.util.Arrays;
 import java.util.HashMap;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.DefaultParser;
@@ -22,7 +20,13 @@ import org.apache.commons.cli.ParseException;
 import org.apache.commons.io.FilenameUtils;
 
 public class LZ78Hash {
+
     public static int UTF = 0b11111111; // 256
+    public static int ASCII = 0b01111111; // 128
+    private static final int encoding = ASCII;
+
+
+
     private static CommandLine parseArgs(String[] args) {
         DefaultParser parser = new DefaultParser();
         Options opts = new Options();
@@ -151,14 +155,14 @@ public class LZ78Hash {
 
         // Step 1 complete
 
-
+/*
         // Step 1.5
 
         char[] fill = new char[80];
         Arrays.fill(fill, 'x');
         out.println(fill);
 
-        // Step 1.5 complete
+        // Step 1.5 complete*/
 
         // Step 2: start reading from input stream
         StringBuilder stringBuffer = new StringBuilder();
@@ -169,7 +173,7 @@ public class LZ78Hash {
         int lastIndex = 0;
         try {
             while ((ch = in.read()) != -1) {
-                if (ch >= UTF) continue;
+                if (ch >= encoding) continue;
                 // start building up the characters read
                 stringBuffer.append((char)ch);
 
@@ -213,18 +217,20 @@ public class LZ78Hash {
             in.close();
             // Step 2: Complete
 
+/*
             // Step 3: update XXX on first line
 
             RandomAccessFile ra = new RandomAccessFile(tmp, "rw");
             ra.seek(0);
             ra.writeBytes(Integer.toString(maxIndex));
             // Step 3 complete
+*/
 
 
             // Step 4: translate ascii to bitcode
 
-            BitEncoder bitEncoder = new BitEncoder(tmp);
-            bitEncoder.printBytes(fout);
+            BitEncoder bitEncoder = new BitEncoder(tmp, fout, encoding, maxIndex);
+            bitEncoder.dump();
 
             // Step 4 complete
 

@@ -3,7 +3,9 @@ apply plugin: 'application'
 
 mainClassName = 'futil.compression.LZ78Hash'
 
-version = '1.0.0'
+// version 1.0.0        : byte as smallest unit
+// version 2.0.SNAPSHOT : bit as smallest unit
+version = '2.0.SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
