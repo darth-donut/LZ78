@@ -61,15 +61,13 @@ public class BitEncoder {
     }
 
     private long log2(long x) {
-        int add = 0;
-        if (isPow2(x))
-            add++;
-        return (long)(Math.ceil(Math.log(x)/Math.log(2))+add);
+        return (long)(Math.ceil(Math.log(x+1)/Math.log(2)));
     }
 
-    private boolean isPow2(long x) {
+
+/*    private boolean isPow2(long x) {
         return ((x & (x-1))  == 0) && x != 0;
-    }
+    }*/
 
 
 }
