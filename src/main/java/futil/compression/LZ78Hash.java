@@ -67,25 +67,25 @@ public class LZ78Hash {
     }
 
     public static void uncompress(File fin, File fout) {
-        // Step 5: Decode bitcode to ascii again
+        // Step 1: Decode bitcode to ascii again
         File dumpFile = null;
         try {
             BitDecoder bitDecoder = new BitDecoder(fin);
-//            dumpFile = File.createTempFile("dumpFile", ".txt");
-            dumpFile = new File("dumpFile.txt");
-//            dumpFile.deleteOnExit();
+            dumpFile = File.createTempFile("dumpFile", ".txt");
+            dumpFile.deleteOnExit();
             bitDecoder.decode(dumpFile);
         } catch (IOException e) {
             e.printStackTrace();
             System.exit(-1);
         }
 
-        // Step 5: complete
+        // Step 1: complete
 
-        // Step 6: Recombine all the tokens
+        // Step 2: Recombine all the tokens
 
         try {
-            PrintWriter pw = new PrintWriter(new FileOutputStream(fout));
+            // @see BitBufferedOutput.java line 35, 36's comments for .getName()
+            PrintWriter pw = new PrintWriter(new FileOutputStream(fout.getName()));
             BufferedReader in = new BufferedReader(new FileReader(dumpFile));
 
             long index;
@@ -117,7 +117,7 @@ public class LZ78Hash {
         }
 
 
-        // Step 6: complete
+        // Step 2: complete
     }
 
     public static void compress(File fin, File fout) {
@@ -157,14 +157,6 @@ public class LZ78Hash {
 
         // Step 1 complete
 
-/*
-        // Step 1.5
-
-        char[] fill = new char[80];
-        Arrays.fill(fill, 'x');
-        out.println(fill);
-
-        // Step 1.5 complete*/
 
         // Step 2: start reading from input stream
         StringBuilder stringBuffer = new StringBuilder();
@@ -219,22 +211,12 @@ public class LZ78Hash {
             in.close();
             // Step 2: Complete
 
-/*
-            // Step 3: update XXX on first line
-
-            RandomAccessFile ra = new RandomAccessFile(tmp, "rw");
-            ra.seek(0);
-            ra.writeBytes(Integer.toString(maxIndex));
-            // Step 3 complete
-*/
-
-
-            // Step 4: translate ascii to bitcode
+            // Step 3: translate ascii to bitcode
 
             BitEncoder bitEncoder = new BitEncoder(tmp, fout, encoding, maxIndex);
             bitEncoder.dump();
 
-            // Step 4 complete
+            // Step 3 complete
 
         } catch (IOException | InvalidHeaderException e) {
             e.printStackTrace();

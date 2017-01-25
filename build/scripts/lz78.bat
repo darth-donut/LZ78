@@ -63,7 +63,7 @@ set CMD_LINE_ARGS=%*
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\lz78-2.0.SNAPSHOT.jar;%APP_HOME%\lib\data_structures-1.0.0SNAPSHOT.jar;%APP_HOME%\lib\commons-cli-1.3.1.jar;%APP_HOME%\lib\commons-io-2.5.jar
+set CLASSPATH=%APP_HOME%\lib\lz78-2.0.SNAPSHOT.jar;%APP_HOME%\lib\data_structures-1.0.0SNAPSHOT.jar;%APP_HOME%\lib\commons-cli-1.3.1.jar;%APP_HOME%\lib\commons-io-2.5.jar;%APP_HOME%\lib\junit-4.12.jar;%APP_HOME%\lib\hamcrest-core-1.3.jar
 
 @rem Execute lz78
 "%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %LZ78_OPTS%  -classpath "%CLASSPATH%" futil.compression.LZ78Hash %CMD_LINE_ARGS%

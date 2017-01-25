@@ -8,6 +8,7 @@ import java.io.*;
 
 public class BitBufferInput {
     private static final int BUFFER_SIZE = (int) 50;
+    private static final int BYTE = 8;
     private DataInputStream infile;
     private int charBitSize;
     private long indexBitLength;
@@ -21,51 +22,63 @@ public class BitBufferInput {
         this.infile = new DataInputStream(new FileInputStream(inFile));
         this.charBitSize = infile.readInt();
         this.indexBitLength = infile.readLong();
-        System.out.println("Char bits used " + charBitSize);
-        System.out.println("index bits used " + indexBitLength);
         this.bufferIndex = 0;
         this.buffer = new byte[BUFFER_SIZE];
         this.next = 0;
         this.lastByte = this.next;
         this.done = false;
+        System.err.println("Charset encoding: " + this.charBitSize+
+                " require " + indexBitLength +" to encode");
     }
 
     public Token getToken() throws IOException {
-        if (done && bufferIndex == lastByte-1
-                || done && (charBitSize+indexBitLength) > (lastByte-bufferIndex)*8)
-            throw new EOFException();
+        // if we're currently looking at the last buffer
+        if (shouldStop()) throw new EOFException();
+
         checkBuffer();
         long index = 0;
         char ch = 0;
 
 
         for (int i = 0; i < charBitSize; next++, i++) {
-            if (next != 0 && next % 8 == 0) {
+            if (next != 0 && next % BYTE == 0) {
                 bufferIndex++;
                 checkBuffer();
+                if (shouldStop()) throw new EOFException();
             }
-            if (((buffer[bufferIndex] >> (7-next%8)) & 1) == 1) {
+            if (((buffer[bufferIndex] >> (7-next%BYTE)) & 1) == 1) {
                 ch += (char)Math.pow(2, (charBitSize-1)-i);
             }
         }
 
         for (int i = 0; i < indexBitLength; next++, i++) {
-            if (next != 0 && next % 8 == 0) {
+            if (next != 0 && next % BYTE == 0) {
                 bufferIndex++;
                 checkBuffer();
+                if (shouldStop()) throw new EOFException();
             }
-            if (((buffer[bufferIndex] >> (7-next%8)) & 1) == 1) {
+            if (((buffer[bufferIndex] >> (7-next%BYTE)) & 1) == 1) {
                 index += (long)Math.pow(2, (indexBitLength-1)-i);
             }
         }
         return new Token(ch, index);
     }
 
+    private boolean shouldStop() {
+        // we should stop when:
+        //    1) we're done (i.e. finish reading file) AND
+        //    2) we don't have enough bits to write another token (which implies we're done;
+        //          unless something bad happened in the encoding stage)
+        return done && (indexBitLength+charBitSize) > byte2bit(lastByte-bufferIndex);
+    }
+
+    private int byte2bit(int n) { return BYTE*n; }
+
     private void checkBuffer() throws IOException {
         // we fill the buffer when:
         //          1) we don't have enough bits to write a token
         //          2) we have a full buffer
-        if (lastByte * 8 < charBitSize + indexBitLength ||
+        if (byte2bit(lastByte)  < charBitSize + indexBitLength ||
                 bufferIndex == lastByte) {
             fillBuffer();
         }

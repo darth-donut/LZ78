@@ -30,7 +30,6 @@ public class BitEncoder {
     public long dump() throws IOException, InvalidHeaderException {
         System.err.println("Charset encoding: " + this.charBitSize+
                 " Largest int " + maxIndex + " require " + indexBitCount +" to encode");
-
         // setup files
         BufferedReader sc = new BufferedReader(new FileReader(ifile));
 
@@ -63,11 +62,6 @@ public class BitEncoder {
     private long log2(long x) {
         return (long)(Math.ceil(Math.log(x+1)/Math.log(2)));
     }
-
-
-/*    private boolean isPow2(long x) {
-        return ((x & (x-1))  == 0) && x != 0;
-    }*/
 
 
 }

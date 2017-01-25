@@ -32,7 +32,9 @@ public class BitBufferOutput {
         this.index = resetByte();
         this.accumulator = 0;
         this.bufferIndex = 0;
-        this.out = new DataOutputStream(new FileOutputStream(outFile));
+        // save to current directory (i.e. just use filename), omitting .getName() saves it to whichever
+        // path you use in the prompt, eg: java ... -c ../../test.txt will cause the output to be in ../../
+        this.out = new DataOutputStream(new FileOutputStream(outFile.getName()));
         this.charBitSize = charBitSize;
         writeMeta();
     }
@@ -48,12 +50,12 @@ public class BitBufferOutput {
 
     public void forceFlush() throws IOException {
         if (bufferIndex != 0) {
-            if (accumulator > 0)
+            if (accumulator > 0) {
                 buffer[bufferIndex] = (byte)(accumulator);
-            out.write(Arrays.copyOf(buffer, bufferIndex));
+            }
+            out.write(Arrays.copyOf(buffer, bufferIndex+1));
             bufferIndex = 0;
             index = resetByte();
-            accumulator = 0;
         }
         out.flush();
     }
