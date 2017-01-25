@@ -72,6 +72,7 @@ public class LZ78Hash {
         try {
             BitDecoder bitDecoder = new BitDecoder(fin);
             dumpFile = File.createTempFile("dumpFile", ".txt");
+            dumpFile = new File("dumpFile.txt");
             dumpFile.deleteOnExit();
             bitDecoder.decode(dumpFile);
         } catch (IOException e) {
