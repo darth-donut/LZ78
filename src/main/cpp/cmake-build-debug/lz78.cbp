@@ -92,6 +92,15 @@
 		<Unit filename="/home/jiahong/Documents/repository/proj/lz78/src/main/cpp/Bit_encode.h">
 			<Option target="lz78"/>
 		</Unit>
+		<Unit filename="/home/jiahong/Documents/repository/proj/lz78/src/main/cpp/Byte.h">
+			<Option target="lz78"/>
+		</Unit>
+		<Unit filename="/home/jiahong/Documents/repository/proj/lz78/src/main/cpp/Token.cc">
+			<Option target="lz78"/>
+		</Unit>
+		<Unit filename="/home/jiahong/Documents/repository/proj/lz78/src/main/cpp/Token.h">
+			<Option target="lz78"/>
+		</Unit>
 		<Unit filename="/home/jiahong/Documents/repository/proj/lz78/src/main/cpp/lz78.cc">
 			<Option target="lz78"/>
 		</Unit>

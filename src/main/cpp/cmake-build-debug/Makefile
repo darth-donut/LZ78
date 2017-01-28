@@ -150,6 +150,33 @@ Bit_encode.cc.s:
 	$(MAKE) -f CMakeFiles/lz78.dir/build.make CMakeFiles/lz78.dir/Bit_encode.cc.s
 .PHONY : Bit_encode.cc.s
 
+Token.o: Token.cc.o
+
+.PHONY : Token.o
+
+# target to build an object file
+Token.cc.o:
+	$(MAKE) -f CMakeFiles/lz78.dir/build.make CMakeFiles/lz78.dir/Token.cc.o
+.PHONY : Token.cc.o
+
+Token.i: Token.cc.i
+
+.PHONY : Token.i
+
+# target to preprocess a source file
+Token.cc.i:
+	$(MAKE) -f CMakeFiles/lz78.dir/build.make CMakeFiles/lz78.dir/Token.cc.i
+.PHONY : Token.cc.i
+
+Token.s: Token.cc.s
+
+.PHONY : Token.s
+
+# target to generate assembly for a file
+Token.cc.s:
+	$(MAKE) -f CMakeFiles/lz78.dir/build.make CMakeFiles/lz78.dir/Token.cc.s
+.PHONY : Token.cc.s
+
 lz78.o: lz78.cc.o
 
 .PHONY : lz78.o
@@ -189,6 +216,9 @@ help:
 	@echo "... Bit_encode.o"
 	@echo "... Bit_encode.i"
 	@echo "... Bit_encode.s"
+	@echo "... Token.o"
+	@echo "... Token.i"
+	@echo "... Token.s"
 	@echo "... lz78.o"
 	@echo "... lz78.i"
 	@echo "... lz78.s"
