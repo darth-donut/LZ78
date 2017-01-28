@@ -54,12 +54,8 @@ public class BitBufferOutput {
 
     /**
      * If bufferIndex isn't 0, it means we haven't wrote to data stream yet.
-     * If accumulator is > 0, it means the byte element in the byte array hasn't accumulated enough
-     * to store 8 bits yet.
-     * When both cases are true, we force add the last byte element into buffer, and then
+     * we force add the last byte element into buffer, and then
      * write to the data stream immediately.
-     *
-     * If accumulator is 0, we just write the buffer into data stream immediately
      *
      * Since this method allows call periodically (i.e. not only when file is about to be closed, we need
      * to maintain the invariant, hence we reset bufferIndex to 0 and reset our index instance variable)
@@ -69,9 +65,7 @@ public class BitBufferOutput {
      */
     public void forceFlush() throws IOException {
         if (bufferIndex != 0) {
-            if (accumulator > 0) {
-                buffer[bufferIndex] = (byte)(accumulator);
-            }
+            buffer[bufferIndex] = (byte)(accumulator);
             out.write(Arrays.copyOf(buffer, bufferIndex+1));
             bufferIndex = 0;
             index = resetByte();

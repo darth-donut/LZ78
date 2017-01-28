@@ -1,0 +1,6 @@
+language:
+    java
+
+script:
+    - gradle build
+    - chmod +x travis_ci.sh && ./travis_ci.sh
