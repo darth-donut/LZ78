@@ -3,4 +3,4 @@ language:
 
 script:
     - gradle build
-    - chmod +x travis_ci.sh && ./travis_ci.sh
+    - chmod +x travis_ci.sh && bash travis_ci.sh
