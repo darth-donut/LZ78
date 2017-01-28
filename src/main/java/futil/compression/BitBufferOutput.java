@@ -43,11 +43,30 @@ public class BitBufferOutput {
         this(outFile, charBitSize, indexBitLength, MAX_BUFF_DEFAULT);
     }
 
+    /**
+     * Record how many bits we are encoding our data in, so our decoder knows how to decode them
+     * @throws IOException
+     */
     private void writeMeta() throws IOException {
         out.writeInt(charBitSize);
         out.writeLong(indexBitLength);
     }
 
+    /**
+     * If bufferIndex isn't 0, it means we haven't wrote to data stream yet.
+     * If accumulator is > 0, it means the byte element in the byte array hasn't accumulated enough
+     * to store 8 bits yet.
+     * When both cases are true, we force add the last byte element into buffer, and then
+     * write to the data stream immediately.
+     *
+     * If accumulator is 0, we just write the buffer into data stream immediately
+     *
+     * Since this method allows call periodically (i.e. not only when file is about to be closed, we need
+     * to maintain the invariant, hence we reset bufferIndex to 0 and reset our index instance variable)
+     *
+     *
+     * @throws IOException
+     */
     public void forceFlush() throws IOException {
         if (bufferIndex != 0) {
             if (accumulator > 0) {
@@ -65,6 +84,21 @@ public class BitBufferOutput {
         out.close();
     }
 
+    /**
+     * From left to right, we deduce the bits of tk's char and index by shifting the bits.
+     * We then accumulate those bits in accumulator(short instead of byte because byte is actually
+     * signed and only takes -128 ... 127 instead of 255).
+     * The variable index keeps track of our current position in the byte element in the byte array,
+     * because we are never just only writing a perfect 8 bit, hence, we need to keep track of the last
+     * "wrote" position.
+     * The shifting starts from the left because we will eventually meet a char or index that doesn't
+     * fit perfectly in a byte. Doing so allows us to use index(the instance variable here) to keep track of
+     * counting(powering 2)
+     * Further, by counting from the left, we do not have to concern ourselves with trailing 0s when the buffer
+     * ends before we fill up the last byte element in the byte array(they are already automatically 0)
+     * @param tk Token to be written into data stream
+     * @throws IOException
+     */
     public void write(Token tk) throws IOException {
         // convert token's character
         for (int i = charBitSize - 1; i >= 0; i--) {
@@ -87,6 +121,12 @@ public class BitBufferOutput {
 
     private int resetByte() { return BYTE - 1; }
 
+    /**
+     * When index reaches -1, it means we have accumulated enough bits to store in one byte
+     * within our byte[] array buffer. Increases the buffer index by 1 and reset the index
+     * to resume accumulating bits
+     * @throws IOException
+     */
     private void checkIndex() throws IOException {
         if (index == -1) {
             buffer[bufferIndex++] = (byte)(accumulator);
@@ -97,6 +137,12 @@ public class BitBufferOutput {
     }
 
 
+    /**
+     * When bufferIndex == maxBufferSize, our array is full, and we should write the contents
+     * to our data stream now. We reset the bufferIndex to 0 so we can override the elements in the
+     * byte array (can optionally empty array, but redundant)
+     * @throws IOException
+     */
     private void checkBuffer() throws IOException {
         if (bufferIndex == maxBufferSize) {
             bufferIndex = 0;

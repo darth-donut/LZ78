@@ -4,9 +4,10 @@
  */
 package futil.compression;
 
-import java.io.*;
-import java.util.Arrays;
-import java.util.InputMismatchException;
+import java.io.EOFException;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class BitDecoder {
     private File file;
