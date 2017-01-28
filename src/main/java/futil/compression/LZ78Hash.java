@@ -24,7 +24,7 @@ public class LZ78Hash {
     public static int UTF = 0b11111111; // 256
     public static int ASCII = 0b01111111; // 128
     private static final int encoding = ASCII;
-
+    private static final String FILE_EXTENSION = ".lz78";
 
 
     private static CommandLine parseArgs(String[] args) {
@@ -58,7 +58,7 @@ public class LZ78Hash {
         // we can be sure cmd.getArgs()[0] has a file
         if (cmd.hasOption("c")) {
             File fin = new File(cmd.getArgs()[0]);
-            File fout = new File(cmd.getArgs()[0]+ ".lz");
+            File fout = new File(cmd.getArgs()[0]+ FILE_EXTENSION);
             compress(fin, fout);
         } else if (cmd.hasOption("x")) {
             uncompress(new File(cmd.getArgs()[0]),
@@ -166,6 +166,7 @@ public class LZ78Hash {
         int ch;
         int index = 0;
         int lastIndex = 0;
+        int tokens = 0;
         try {
             while ((ch = in.read()) != -1) {
                 if (ch >= encoding) continue;
@@ -179,6 +180,8 @@ public class LZ78Hash {
                     // get the last index of the known string, and print it to out-stream,
                     // along with this unknown character(ch)
                     out.println((char)ch + "" + lastIndex);
+
+                    tokens++;   // we've just printed 1 token
 
                     // clear the contents of stringBuffer
                     stringBuffer.setLength(0);
@@ -207,6 +210,7 @@ public class LZ78Hash {
                     out.println(lastCharacter + "" + lastIndex);
                     maxIndex = lastIndex > maxIndex ? lastIndex : maxIndex;
                 }
+                tokens++;
             }
             out.close();
             in.close();
@@ -214,7 +218,7 @@ public class LZ78Hash {
 
             // Step 3: translate ascii to bitcode
 
-            BitEncoder bitEncoder = new BitEncoder(tmp, fout, encoding, maxIndex);
+            BitEncoder bitEncoder = new BitEncoder(tmp, fout, encoding, maxIndex, tokens);
             bitEncoder.dump();
 
             // Step 3 complete

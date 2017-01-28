@@ -18,6 +18,7 @@ public class BitBufferInput {
     private DataInputStream infile;
     private int charBitSize;
     private long indexBitLength;
+    private long tokens;
     private int bufferIndex;
     private int next;
     private byte[] buffer;
@@ -28,6 +29,7 @@ public class BitBufferInput {
         this.infile = new DataInputStream(new FileInputStream(inFile));
         this.charBitSize = infile.readInt();
         this.indexBitLength = infile.readLong();
+        this.tokens = infile.readLong();
         this.bufferSize = (int)Math.ceil(1.0*(charBitSize+indexBitLength)/8) * BUFFER_SIZE;
         this.bufferIndex = 0;
         this.buffer = new byte[bufferSize];
@@ -87,15 +89,13 @@ public class BitBufferInput {
                 index += (long)Math.pow(2, (indexBitLength-1)-i);
             }
         }
+        // we can cross one token count down
+        tokens--;
         return new Token(ch, index);
     }
 
     private boolean shouldStop() {
-        // we should stop when:
-        //    1) we're done (i.e. finish reading file) AND
-        //    2) we don't have enough bits to write another token (which implies we're done;
-        //          unless something bad happened in the encoding stage)
-        return done && (indexBitLength+charBitSize) > byte2bit(lastByte-bufferIndex);
+        return tokens == 0;
     }
 
 

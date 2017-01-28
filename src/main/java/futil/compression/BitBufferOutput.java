@@ -18,18 +18,20 @@ public class BitBufferOutput {
     private final static int MAX_BUFF_DEFAULT = (int)50;
     private int charBitSize;
     private int maxBufferSize;
+    private long tokens;
     private int index;
     private int bufferIndex;
     private DataOutputStream out;
     private short accumulator;
     private byte[] buffer;
 
-    public BitBufferOutput(File outFile, int charBitSize, long indexBitLength, int maxBufferSize)
+    public BitBufferOutput(File outFile, int charBitSize, long indexBitLength, long tokens, int maxBufferSize)
             throws IOException {
         this.indexBitLength = indexBitLength;
         this.maxBufferSize = maxBufferSize;
         this.buffer =  new byte[maxBufferSize];
         this.index = resetByte();
+        this.tokens = tokens;
         this.accumulator = 0;
         this.bufferIndex = 0;
         // save to current directory (i.e. just use filename), omitting .getName() saves it to whichever
@@ -39,8 +41,8 @@ public class BitBufferOutput {
         writeMeta();
     }
 
-    public BitBufferOutput(File outFile, int charBitSize, long indexBitLength) throws IOException {
-        this(outFile, charBitSize, indexBitLength, MAX_BUFF_DEFAULT);
+    public BitBufferOutput(File outFile, int charBitSize, long indexBitLength, long tokens) throws IOException {
+        this(outFile, charBitSize, indexBitLength, tokens, MAX_BUFF_DEFAULT);
     }
 
     /**
@@ -50,28 +52,9 @@ public class BitBufferOutput {
     private void writeMeta() throws IOException {
         out.writeInt(charBitSize);
         out.writeLong(indexBitLength);
+        out.writeLong(tokens);
     }
 
-    /**
-     * If bufferIndex isn't 0, it means we haven't wrote to data stream yet.
-     * we force add the last byte element into buffer, and then
-     * write to the data stream immediately.
-     *
-     * Since this method allows call periodically (i.e. not only when file is about to be closed, we need
-     * to maintain the invariant, hence we reset bufferIndex to 0 and reset our index instance variable)
-     *
-     *
-     * @throws IOException
-     */
-    public void forceFlush() throws IOException {
-        if (bufferIndex != 0) {
-            buffer[bufferIndex] = (byte)(accumulator);
-            out.write(Arrays.copyOf(buffer, bufferIndex+1));
-            bufferIndex = 0;
-            index = resetByte();
-        }
-        out.flush();
-    }
 
     public void close() throws IOException {
         forceFlush();
@@ -142,5 +125,13 @@ public class BitBufferOutput {
             bufferIndex = 0;
             out.write(buffer);
         }
+    }
+
+    private void forceFlush() throws IOException {
+        buffer[bufferIndex] = (byte)(accumulator);
+        out.write(Arrays.copyOf(buffer, bufferIndex+1));
+        bufferIndex = 0;
+        index = resetByte();
+        out.flush();
     }
 }

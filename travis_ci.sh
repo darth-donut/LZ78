@@ -17,7 +17,7 @@ for f in $(ls ../src/main/resources/testfiles/); do
     # compress file
     java -jar ../$jar -c ../src/main/resources/testfiles/$f
     # uncompress
-    java -jar ../$jar -x "$f".lz
+    java -jar ../$jar -x "$f".lz78
     # check
     out=$(diff $f ../src/main/resources/testfiles/$f) 
     if [[ "${out}" ]]; then

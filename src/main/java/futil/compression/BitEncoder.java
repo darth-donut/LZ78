@@ -14,9 +14,10 @@ public class BitEncoder {
     private File ifile;
     private int maxIndex;
     private int charBitSize;
+    private long tokens;
     private long indexBitCount;
 
-    public BitEncoder(File ifile, File ofile, int encoding, int maxIndex) throws FileNotFoundException {
+    public BitEncoder(File ifile, File ofile, int encoding, int maxIndex, long tokens) throws FileNotFoundException {
         if (!ifile.exists())
             throw new FileNotFoundException();
         this.ifile = ifile;
@@ -24,6 +25,7 @@ public class BitEncoder {
         this.maxIndex = maxIndex;
         this.charBitSize = (int)log2(encoding);
         this.indexBitCount = log2(maxIndex);
+        this.tokens = tokens;
     }
 
 
@@ -39,7 +41,7 @@ public class BitEncoder {
         StringBuilder buffer = new StringBuilder();
 
         // BitBuffer setup
-        BitBufferOutput bitBufferOutput = new BitBufferOutput(ofile, charBitSize, indexBitCount);
+        BitBufferOutput bitBufferOutput = new BitBufferOutput(ofile, charBitSize, indexBitCount, tokens);
 
         while ((ch = sc.read()) != -1) {
             // read index
