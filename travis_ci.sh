@@ -1,6 +1,6 @@
 #!/bin/bash
 
-jar="build/libs/lz78-2.0.SNAPSHOT.jar"
+jar="build/libs/lz78-2.0.0.jar"
 
 
 function clean {
