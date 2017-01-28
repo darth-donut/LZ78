@@ -45,14 +45,14 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/home/jiahong/Documents/repository/proj/lz78/src/main/cpp/libs"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/6/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
-					<Add directory="/usr/include/c++/6"/>
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/6"/>
-					<Add directory="/usr/include/c++/6/backward"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/make -j8 -f &quot;/home/jiahong/Documents/repository/proj/lz78/src/main/cpp/cmake-build-debug/Makefile&quot;  VERBOSE=1 lz78"/>
@@ -69,14 +69,14 @@
 				<Option compiler="gcc"/>
 				<Compiler>
 					<Add directory="/home/jiahong/Documents/repository/proj/lz78/src/main/cpp/libs"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/6/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
 					<Add directory="/usr/local/include"/>
-					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/6/include-fixed"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
 					<Add directory="/usr/include/x86_64-linux-gnu"/>
 					<Add directory="/usr/include"/>
-					<Add directory="/usr/include/c++/6"/>
-					<Add directory="/usr/include/x86_64-linux-gnu/c++/6"/>
-					<Add directory="/usr/include/c++/6/backward"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
 				</Compiler>
 				<MakeCommands>
 					<Build command="/usr/bin/make -j8 -f &quot;/home/jiahong/Documents/repository/proj/lz78/src/main/cpp/cmake-build-debug/Makefile&quot;  VERBOSE=1 lz78/fast"/>
@@ -90,12 +90,6 @@
 			<Option target="lz78"/>
 		</Unit>
 		<Unit filename="/home/jiahong/Documents/repository/proj/lz78/src/main/cpp/Bit_encode.h">
-			<Option target="lz78"/>
-		</Unit>
-		<Unit filename="/home/jiahong/Documents/repository/proj/lz78/src/main/cpp/LZPair.cc">
-			<Option target="lz78"/>
-		</Unit>
-		<Unit filename="/home/jiahong/Documents/repository/proj/lz78/src/main/cpp/LZPair.h">
 			<Option target="lz78"/>
 		</Unit>
 		<Unit filename="/home/jiahong/Documents/repository/proj/lz78/src/main/cpp/lz78.cc">

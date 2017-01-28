@@ -39,10 +39,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /home/jiahong/Documents/IDE/clion-2016.3.2/bin/cmake/bin/cmake
+CMAKE_COMMAND = /home/jiahong/Documents/ide/clion-2016.3.2/bin/cmake/bin/cmake
 
 # The command to remove a file.
-RM = /home/jiahong/Documents/IDE/clion-2016.3.2/bin/cmake/bin/cmake -E remove -f
+RM = /home/jiahong/Documents/ide/clion-2016.3.2/bin/cmake/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -59,7 +59,7 @@ CMAKE_BINARY_DIR = /home/jiahong/Documents/repository/proj/lz78/src/main/cpp/cma
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/home/jiahong/Documents/IDE/clion-2016.3.2/bin/cmake/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+	/home/jiahong/Documents/ide/clion-2016.3.2/bin/cmake/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -70,7 +70,7 @@ edit_cache/fast: edit_cache
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
-	/home/jiahong/Documents/IDE/clion-2016.3.2/bin/cmake/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	/home/jiahong/Documents/ide/clion-2016.3.2/bin/cmake/bin/cmake -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -150,33 +150,6 @@ Bit_encode.cc.s:
 	$(MAKE) -f CMakeFiles/lz78.dir/build.make CMakeFiles/lz78.dir/Bit_encode.cc.s
 .PHONY : Bit_encode.cc.s
 
-LZPair.o: LZPair.cc.o
-
-.PHONY : LZPair.o
-
-# target to build an object file
-LZPair.cc.o:
-	$(MAKE) -f CMakeFiles/lz78.dir/build.make CMakeFiles/lz78.dir/LZPair.cc.o
-.PHONY : LZPair.cc.o
-
-LZPair.i: LZPair.cc.i
-
-.PHONY : LZPair.i
-
-# target to preprocess a source file
-LZPair.cc.i:
-	$(MAKE) -f CMakeFiles/lz78.dir/build.make CMakeFiles/lz78.dir/LZPair.cc.i
-.PHONY : LZPair.cc.i
-
-LZPair.s: LZPair.cc.s
-
-.PHONY : LZPair.s
-
-# target to generate assembly for a file
-LZPair.cc.s:
-	$(MAKE) -f CMakeFiles/lz78.dir/build.make CMakeFiles/lz78.dir/LZPair.cc.s
-.PHONY : LZPair.cc.s
-
 lz78.o: lz78.cc.o
 
 .PHONY : lz78.o
@@ -216,9 +189,6 @@ help:
 	@echo "... Bit_encode.o"
 	@echo "... Bit_encode.i"
 	@echo "... Bit_encode.s"
-	@echo "... LZPair.o"
-	@echo "... LZPair.i"
-	@echo "... LZPair.s"
 	@echo "... lz78.o"
 	@echo "... lz78.i"
 	@echo "... lz78.s"

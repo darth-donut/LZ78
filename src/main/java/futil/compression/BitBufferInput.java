@@ -50,12 +50,10 @@ public class BitBufferInput {
      * wrap happens and we need to increase bufferIndex by one (i.e. we need to look at the next byte element) because
      * we've just read 8 bits already.
      *
-     * Further, to keep track of when to stop, we need to check if:
-     *  1) the done boolean is set to true, i.e. the data stream has nothing to offer anymore
-     *                  AND
-     *  2) we don't have sufficient bits to write another token (which implies that the remaining bits are
-     *  trailing 0s from the encoder)
-     * @return
+     * Further, to keep track of when to stop, we need to check if tokens > 0, which implies we still have more
+     * tokens to read.
+     *
+     * @return Token
      * @throws IOException
      */
     public Token getToken() throws IOException {

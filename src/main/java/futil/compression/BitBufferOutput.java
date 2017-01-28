@@ -70,7 +70,7 @@ public class BitBufferOutput {
      * "wrote" position.
      * The shifting starts from the left because we will eventually meet a char or index that doesn't
      * fit perfectly in a byte. Doing so allows us to use index(the instance variable here) to keep track of
-     * counting(powering 2)
+     * counting(powering by 2)
      * Further, by counting from the left, we do not have to concern ourselves with trailing 0s when the buffer
      * ends before we fill up the last byte element in the byte array(they are already automatically 0)
      * @param tk Token to be written into data stream
