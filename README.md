@@ -16,8 +16,8 @@ efficiently as you only need the index _k_ to look up the rest of the characters
 
 Stopping here already allows efficient compression on non-trivial sized files, but encoding _k_ in a minimum of
 8 or 16 bits (1 or 2 char sized) is sometimes wasteful because _k_ might be < 2^8 or 2^16.
-This calls for encoding in binary instead. Finally,
-the files can be further compressed using log2(max(_k_)) bits for each _k_.
+This calls for encoding in binary.
+This implies that the files can be further compressed using log2(max(_k_)) bits for each _k_.
 
 Since Java, doesn't support bit writing, a wrapper class acts as a buffer that keeps track of the current bit and
 periodically flushes the data into our binary file when enough bytes are accumulated. Similarly, the decoder wrapper
