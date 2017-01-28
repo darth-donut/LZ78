@@ -19,7 +19,7 @@ Stopping here already allows efficient compression on non-trivial sized files, b
 This calls for encoding in binary.
 This implies that the files can be further compressed using log2(max(_k_)) bits for each _k_.
 
-Since Java, doesn't support bit writing, a wrapper class acts as a buffer that keeps track of the current bit and
+Since Java doesn't support bit writing, a wrapper class acts as a buffer that keeps track of the current bit and
 periodically flushes the data into our binary file when enough bytes are accumulated. Similarly, the decoder wrapper
 class reads in bits to decode them back into our factors *_(c, k)_*. The tokens are then re-translated back into
 sentences.
