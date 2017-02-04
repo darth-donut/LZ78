@@ -4,7 +4,7 @@ LZ78 ASCII file compression
 
 This implementation of LZ78 emulates the [LZ78](https://en.wikipedia.org/wiki/LZ77_and_LZ78) algorithm
 (a variant of [gzip's algorithm](http://www.gzip.org/algorithm.txt)) **__and is for educational purposes only.__**
-Documentation are written throughout the methods, feel free to read them.
+Documentations are written throughout the methods, feel free to read them.
 
 Clearly, this repository wasn't created for actual usage but as a for-fun project. **__DO NOT__**
 use this program on any files that are important, as it hasn't been tested enough yet. Do so at your own risk.
